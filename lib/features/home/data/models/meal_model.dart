@@ -3,8 +3,10 @@ class MealModel {
   final String title;
   final String imageUrl;
   final String category;
+  final String area;
   final String instructions;
   final List<String> ingredients;
+  final String youtubeUrl;
   final String time;
   final String difficulty;
 
@@ -13,10 +15,12 @@ class MealModel {
     required this.title,
     required this.imageUrl,
     required this.category,
+    required this.area,
     required this.instructions,
     required this.ingredients,
-    this.time = "30 Dəq",
-    this.difficulty = "Orta",
+    required this.youtubeUrl,
+    this.time = '',
+    this.difficulty = '',
   });
 
   factory MealModel.fromJson(Map<String, dynamic> json) {
@@ -33,13 +37,15 @@ class MealModel {
     }
 
     return MealModel(
-      id: meal['idMeal'],
-      title: meal['strMeal'],
-      imageUrl: meal['strMealThumb'],
-      category: meal['strCategory'],
+      id: meal['idMeal']?.toString() ?? '',
+      title: meal['strMeal']?.toString() ?? '',
+      imageUrl: meal['strMealThumb']?.toString() ?? '',
+      category: meal['strCategory']?.toString() ?? '',
+      area: meal['strArea']?.toString() ?? '',
       instructions:
-          meal['strInstructions'] ?? 'Hazırlanma qaydası qeyd edilməyib.',
+          meal['strInstructions']?.toString() ?? 'Hazırlanma qaydası qeyd edilməyib.',
       ingredients: ingredientsList,
+      youtubeUrl: meal['strYoutube']?.toString() ?? '',
     );
   }
 
@@ -49,8 +55,10 @@ class MealModel {
       'title': title,
       'imageUrl': imageUrl,
       'category': category,
+      'area': area,
       'instructions': instructions,
       'ingredients': ingredients,
+      'youtubeUrl': youtubeUrl,
       'time': time,
       'difficulty': difficulty,
     };
@@ -61,11 +69,14 @@ class MealModel {
       id: map['id'],
       title: map['title'],
       imageUrl: map['imageUrl'],
-      category: map['category'],
-      instructions: map['instructions'],
+      category: map['category'] ?? '',
+      area: map['area'] ?? '',
+      instructions: map['instructions'] ?? '',
       ingredients: List<String>.from(map['ingredients'] ?? []),
-      time: map['time'] ?? '30 Dəq',
-      difficulty: map['difficulty'] ?? 'Orta',
+      youtubeUrl: map['youtubeUrl'] ?? '',
+      time: map['time']?.toString() ?? '',
+      difficulty: map['difficulty']?.toString() ?? '',
     );
   }
 }
+

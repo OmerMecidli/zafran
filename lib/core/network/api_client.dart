@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import '../constants/api_constants.dart';
 
@@ -16,12 +17,13 @@ class ApiClient {
 
     dio.interceptors.add(
       LogInterceptor(
-        request: true,
-        requestBody: true,
-        responseBody: true,
+        request: kDebugMode,
+        requestBody: kDebugMode,
+        responseBody: kDebugMode,
         responseHeader: false,
-        error: true,
+        error: kDebugMode,
       ),
     );
   }
 }
+

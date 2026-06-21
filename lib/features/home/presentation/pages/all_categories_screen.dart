@@ -12,7 +12,7 @@ class AllCategoriesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text("Bütün Kateqoriyalar"),
+        title: const Text('Bütün Kateqoriyalar'),
         backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       body: SafeArea(
@@ -40,3 +40,4 @@ class AllCategoriesScreen extends StatelessWidget {
     );
   }
 }
+

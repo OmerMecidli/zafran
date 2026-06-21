@@ -1,5 +1,5 @@
-name: zafran2
-description: "A new Flutter project."
+name: zafran
+description: "A recipe application featuring clean architecture, BLoC, and detailed recipes."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -40,6 +40,10 @@ dependencies:
   go_router: ^17.2.3
   cached_network_image: ^3.4.1
   google_fonts: ^8.1.0
+  get_it: ^9.2.1
+  flutter_animate: ^4.5.2
+  url_launcher: ^6.3.2
+  share_plus: ^13.1.0
 
 dev_dependencies:
   flutter_test:

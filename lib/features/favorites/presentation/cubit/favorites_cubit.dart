@@ -38,3 +38,5 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     return state.favoriteMeals.any((m) => m.id == id);
   }
 }
+
+

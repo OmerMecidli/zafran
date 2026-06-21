@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:zafran/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -14,11 +16,21 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
+  Timer? _debounce;
+  bool _isIngredientSearch = false;
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _onSearch(String value) {
+    if (value.isNotEmpty) {
+      context.read<SearchCubit>().searchMeals(value, isIngredientSearch: _isIngredientSearch);
+    } else {
+      context.read<SearchCubit>().clearSearch();
+    }
   }
 
   @override
@@ -32,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Axtarış",
+                'Axtarış',
                 style: Theme.of(
                   context,
                 ).textTheme.displayLarge?.copyWith(fontSize: 28),
@@ -42,14 +54,21 @@ class _SearchScreenState extends State<SearchScreen> {
               Container(
                 height: 56,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF5ECE7),
+                  color: AppTheme.surfaceContainer,
                   borderRadius: BorderRadius.circular(28),
                 ),
                 child: TextField(
                   controller: _searchController,
                   textInputAction: TextInputAction.search,
+                  onChanged: (value) {
+                    if (_debounce?.isActive ?? false) _debounce!.cancel();
+                    _debounce = Timer(const Duration(milliseconds: 500), () {
+                      _onSearch(value);
+                    });
+                  },
                   onSubmitted: (value) {
-                    context.read<SearchCubit>().searchMeals(value);
+                    _debounce?.cancel();
+                    _onSearch(value);
                   },
                   decoration: InputDecoration(
                     prefixIcon: const Icon(
@@ -63,11 +82,42 @@ class _SearchScreenState extends State<SearchScreen> {
                         context.read<SearchCubit>().clearSearch();
                       },
                     ),
-                    hintText: "Yemək adı daxil edin...",
+                    hintText: _isIngredientSearch ? 'İnqrediyent daxil edin...' : 'Yemək adı daxil edin...',
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 18),
                   ),
                 ),
+              ),
+              const SizedBox(height: 16),
+              
+              Row(
+                children: [
+                  FilterChip(
+                    label: const Text('Yemək adına görə'),
+                    selected: !_isIngredientSearch,
+                    onSelected: (selected) {
+                      setState(() {
+                        _isIngredientSearch = false;
+                      });
+                      _onSearch(_searchController.text);
+                    },
+                    selectedColor: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+                    checkmarkColor: Theme.of(context).primaryColor,
+                  ),
+                  const SizedBox(width: 12),
+                  FilterChip(
+                    label: const Text('İnqrediyentə görə'),
+                    selected: _isIngredientSearch,
+                    onSelected: (selected) {
+                      setState(() {
+                        _isIngredientSearch = true;
+                      });
+                      _onSearch(_searchController.text);
+                    },
+                    selectedColor: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+                    checkmarkColor: Theme.of(context).primaryColor,
+                  ),
+                ],
               ),
               const SizedBox(height: 24),
 
@@ -77,7 +127,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     if (state is SearchInitial) {
                       return Center(
                         child: Text(
-                          "Nəticələri görmək üçün axtarış edin",
+                          'Nəticələri görmək üçün axtarış edin',
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       );
@@ -88,7 +138,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     } else if (state is SearchLoaded) {
                       if (state.meals.isEmpty) {
                         return const Center(
-                          child: Text("Heç bir nəticə tapılmadı :("),
+                          child: Text('Heç bir nəticə tapılmadı :('),
                         );
                       }
 

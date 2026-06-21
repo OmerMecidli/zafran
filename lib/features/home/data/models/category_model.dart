@@ -11,9 +11,10 @@ class CategoryModel {
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
-      id: json['idCategory'],
-      title: json['strCategory'],
-      imageUrl: json['strCategoryThumb'],
+      id: json['idCategory']?.toString() ?? '',
+      title: json['strCategory']?.toString() ?? '',
+      imageUrl: json['strCategoryThumb']?.toString() ?? '',
     );
   }
 }
+

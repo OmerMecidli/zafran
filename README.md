@@ -1,44 +1,61 @@
-# 🍳 Zafran
+# Zafran Recipe App 🍳
 
-A modern, high-performance, and pixel-perfect Recipe Application built with Flutter. The project fetches dynamic culinary data from **TheMealDB API** and showcases industry-standard architectural patterns, clean state management, and fluid user experiences.
+**Zafran** is a modern and elegant recipe application built with Flutter. It allows users to explore world cuisines, discover new recipes, search by ingredients, and manage their cooking process efficiently with dedicated cooking modes and shopping lists.
+
+## 🚀 Features
+
+- **World Cuisine Exploration:** Browse meals categorized by origin (Italian, Turkish, Mexican, etc.) and category (Beef, Chicken, Dessert).
+- **Ingredient Search:** Find recipes by typing a specific ingredient (e.g., 'chicken').
+- **Smart Shopping List:** Add ingredients from your favorite meals into a unified shopping list with a checklist feature. Easily select which favorite recipes you want to shop for today.
+- **Immersive Cooking Mode:** A distraction-free, full-screen step-by-step cooking guide with a progress bar to help you follow instructions easily while in the kitchen.
+- **Favorites & Local Storage:** Save recipes to your favorites and manage your shopping list offline using `GetStorage`.
+- **YouTube Integration:** Watch recipe tutorials directly on the YouTube app with a single click.
+- **Beautiful UI:** A sleek, minimal design with custom themes, smooth animations, and optimized safe areas for all devices.
+
+## 🛠 Tech Stack
+
+- **Framework:** [Flutter](https://flutter.dev/) (Dart)
+- **State Management:** [Flutter BLoC / Cubit](https://pub.dev/packages/flutter_bloc)
+- **Routing:** [GoRouter](https://pub.dev/packages/go_router) with ShellRoute for nested navigation.
+- **Local Storage:** [GetStorage](https://pub.dev/packages/get_storage) for fast, synchronous key-value storage.
+- **Dependency Injection:** [GetIt](https://pub.dev/packages/get_it)
+- **Networking:** [Dio](https://pub.dev/packages/dio)
+- **Animations:** [Flutter Animate](https://pub.dev/packages/flutter_animate)
+- **API Integration:** Powered by [TheMealDB API](https://www.themealdb.com/).
+
+## 📱 Screenshots
+
+*(Add screenshots of your application here)*
+
+## 📥 Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/yourusername/zafran.git
+   cd zafran
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   flutter pub get
+   ```
+
+3. **Run the application:**
+   ```bash
+   flutter run
+   ```
+
+## 🏗 Architecture & Folder Structure
+
+The project follows a clean, feature-based architecture pattern:
+- `lib/core/` - Contains app-wide themes, networking (Dio client), routing, and generic widgets.
+- `lib/features/` - Divided by domains (`home`, `search`, `favorites`, `recipe_detail`), each containing its own `data`, `domain`, and `presentation` layers.
+
+## ✨ Recent Updates
+
+- **Cooking Mode:** Added a full-screen instruction reader.
+- **Shopping List Generator:** Consolidated favorite ingredients into an interactive checklist.
+- UI Layout optimizations and overflow fixes.
 
 ---
-
-## 🚀 Key Features
-
-* **Dynamic Home Feed:** Displays a curated "Meal of the Day" alongside a horizontally scrollable categories list, smoothly built with decoupled API states.
-* **Smart Search System:** Real-time recipe search with seamless state cleaning (`TextEditingController` integrated with Cubit logic).
-* **Persistent Favorites Layer:** Users can bookmark recipes. Data is securely cached in local storage using `GetStorage`, remaining intact even after app restarts.
-* **Advanced Detail Views:** Implements high-fidelity UI animations with `SliverAppBar`, dynamic ingredient listings, and step-by-step cooking instructions.
-* **Adaptive Bottom Navigation:** Implements complex nested navigation where the bottom bar persists across core tabs but elegantly hides on detail pages.
-
----
-
-## 🛠 Tech Stack & Architecture
-
-This project follows **Feature-First Layered Architecture** (Data, Domain/Model, Presentation) to maximize maintainability and scalability.
-
-* **State Management:** `Flutter BLoC (Cubit)` — chosen for predictable, reactive, and unidirectional data flow.
-* **Routing:** `GoRouter` — utilizing advanced `ShellRoute` configurations for sophisticated tab switching and clean deep-linking.
-* **Networking:** `Dio` — wrapped inside a centralized `ApiClient` for clean HTTP client handling and interceptor flexibility.
-* **Local Caching:** `GetStorage` — lightweight, fast key-value storage for offline favorites tracking.
-* **Image Caching:** `CachedNetworkImage` — optimizes image memory consumption and handles smooth loading/error states.
-
----
-
-## 📁 Folder Structure
-
-```text
-lib/
-│
-├── core/                  # Core utilities shared across features
-│   ├── constants/         # API endpoints and design tokens
-│   ├── network/           # Central HTTP/Dio client
-│   ├── routing/           # GoRouter & ShellRoute configuration
-│   └── theme/             # Material 3 typography and design system
-│
-└── features/              # Feature-driven modules
-    ├── home/              # Data sources, Cubits, and widgets for Feed
-    ├── recipe_detail/     # Dynamic detail screens and Slivers
-    ├── favorites/         # Local caching layer and persistent UI
-    └── search/            # Search engine cubits and interactive views
+*Developed with ❤️ using Flutter.*

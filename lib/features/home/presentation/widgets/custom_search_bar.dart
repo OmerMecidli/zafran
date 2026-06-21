@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:zafran/core/theme/app_theme.dart';
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({super.key});
@@ -9,8 +10,16 @@ class CustomSearchBar extends StatelessWidget {
     return Container(
       height: 56,
       decoration: BoxDecoration(
-        color: const Color(0xFFF5ECE7),
+        color: AppTheme.surfaceContainer,
         borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: AppTheme.onSurfaceVariant.withValues(alpha: 0.2)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: TextField(
         readOnly: true,
@@ -19,7 +28,7 @@ class CustomSearchBar extends StatelessWidget {
         },
         decoration: const InputDecoration(
           prefixIcon: Icon(Icons.search, color: Color(0xFF45483C)),
-          hintText: "Axtar",
+          hintText: 'Axtar',
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(vertical: 18),
         ),

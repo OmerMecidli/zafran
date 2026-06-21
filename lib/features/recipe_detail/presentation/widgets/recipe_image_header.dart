@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,62 +20,74 @@ class RecipeImageHeader extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColor,
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: CircleAvatar(
-          backgroundColor: Colors.white.withValues(alpha: .9),
-          child: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.black,
-              size: 20,
+        child: ClipOval(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              color: Colors.white.withValues(alpha: 0.5),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.black,
+                  size: 20,
+                ),
+                onPressed: () => context.pop(),
+              ),
             ),
-            onPressed: () => context.pop(),
           ),
         ),
       ),
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.white.withValues(alpha: .9),
+          child: ClipOval(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                color: Colors.white.withValues(alpha: 0.5),
+                child: BlocBuilder<FavoritesCubit, FavoritesState>(
+                  builder: (context, state) {
+                    final isFav = context.read<FavoritesCubit>().isFavorite(
+                      meal.id,
+                    );
 
-            child: BlocBuilder<FavoritesCubit, FavoritesState>(
-              builder: (context, state) {
-                final isFav = context.read<FavoritesCubit>().isFavorite(
-                  meal.id,
-                );
-
-                return IconButton(
-                  icon: Icon(
-                    isFav ? Icons.favorite : Icons.favorite_border,
-                    color: const Color(0xFF9F402D),
-                  ),
-                  onPressed: () {
-                    context.read<FavoritesCubit>().toggleFavorite(meal);
-
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          isFav
-                              ? "Favoritlərdən silindi"
-                              : "Favoritlərə əlavə edildi",
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        backgroundColor: Theme.of(context).primaryColor,
-                        duration: const Duration(seconds: 1),
+                    return IconButton(
+                      icon: Icon(
+                        isFav ? Icons.favorite : Icons.favorite_border,
+                        color: const Color(0xFF9F402D),
                       ),
+                      onPressed: () {
+                        context.read<FavoritesCubit>().toggleFavorite(meal);
+
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              isFav
+                                  ? 'Favoritlərdən silindi'
+                                  : 'Favoritlərə əlavə edildi',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            backgroundColor: Theme.of(context).primaryColor,
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
+                ),
+              ),
             ),
           ),
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(
-        background: CachedNetworkImage(
-          imageUrl: meal.imageUrl,
-          fit: BoxFit.cover,
+        background: Hero(
+          tag: meal.id,
+          child: CachedNetworkImage(
+            imageUrl: meal.imageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

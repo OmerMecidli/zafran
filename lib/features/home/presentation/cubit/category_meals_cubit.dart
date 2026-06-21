@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/repositories/home_repository.dart';
+import '../../domain/repositories/home_repository.dart';
 import 'category_meals_state.dart';
 
 class CategoryMealsCubit extends Cubit<CategoryMealsState> {
@@ -16,4 +16,16 @@ class CategoryMealsCubit extends Cubit<CategoryMealsState> {
       emit(CategoryMealsError(message: e.toString()));
     }
   }
+
+  Future<void> fetchMealsByArea(String areaName) async {
+    emit(CategoryMealsLoading());
+    try {
+      final meals = await repository.getMealsByArea(areaName);
+      emit(CategoryMealsLoaded(meals: meals));
+    } catch (e) {
+      emit(CategoryMealsError(message: e.toString()));
+    }
+  }
 }
+
+

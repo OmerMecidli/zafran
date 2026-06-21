@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zafran2/features/home/data/models/category_model.dart';
-import 'package:zafran2/features/home/data/models/meal_model.dart';
-import '../../data/repositories/home_repository.dart';
+import 'package:zafran/features/home/data/models/category_model.dart';
+import 'package:zafran/features/home/data/models/meal_model.dart';
+import '../../domain/repositories/home_repository.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -15,15 +15,19 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       final results = await Future.wait([
         repository.getCategories(),
+        repository.getAreas(),
         repository.getRandomMeal(),
       ]);
 
       final categories = results[0] as List<CategoryModel>;
-      final dailyMeal = results[1] as MealModel;
+      final areas = results[1] as List<String>;
+      final dailyMeal = results[2] as MealModel;
 
-      emit(HomeLoaded(categories: categories, dailyMeal: dailyMeal));
+      emit(HomeLoaded(categories: categories, areas: areas, dailyMeal: dailyMeal));
     } catch (e) {
       emit(HomeError(message: e.toString()));
     }
   }
 }
+
+

@@ -12,3 +12,4 @@ class RecipeDetailError extends RecipeDetailState {
   final String message;
   RecipeDetailError({required this.message});
 }
+

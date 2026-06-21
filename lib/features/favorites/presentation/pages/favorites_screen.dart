@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/favorites_cubit.dart';
 import '../cubit/favorites_state.dart';
+import '../../../../core/widgets/meal_list_card.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -14,11 +14,20 @@ class FavoritesScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          "Bəyəndiklərim",
+          'Bəyəndiklərim',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         backgroundColor: Theme.of(context).colorScheme.surface,
         scrolledUnderElevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_bag_outlined),
+            tooltip: 'Alış-veriş Siyahısı',
+            onPressed: () {
+              context.push('/shopping-list');
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<FavoritesCubit, FavoritesState>(
         builder: (context, state) {
@@ -34,7 +43,7 @@ class FavoritesScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    "Heç bir yeməyi bəyənməmisiniz",
+                    'Heç bir yeməyi bəyənməmisiniz',
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
@@ -50,71 +59,16 @@ class FavoritesScreen extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
               final meal = state.favoriteMeals[index];
-              return GestureDetector(
-                onTap: () => context.push('/recipe/${meal.id}'),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: .03),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
+              return MealListCard(
+                meal: meal,
+                trailing: IconButton(
+                  icon: Icon(
+                    Icons.favorite,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.horizontal(
-                          left: Radius.circular(16),
-                        ),
-                        child: CachedNetworkImage(
-                          imageUrl: meal.imageUrl,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              meal.category,
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              meal.title,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      IconButton(
-                        icon: const Icon(
-                          Icons.favorite,
-                          color: Color(0xFF9F402D),
-                        ),
-                        onPressed: () {
-                          context.read<FavoritesCubit>().toggleFavorite(meal);
-                        },
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
+                  onPressed: () {
+                    context.read<FavoritesCubit>().toggleFavorite(meal);
+                  },
                 ),
               );
             },
@@ -124,3 +78,4 @@ class FavoritesScreen extends StatelessWidget {
     );
   }
 }
+

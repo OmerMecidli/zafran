@@ -1,3 +1,4 @@
+import 'package:zafran/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
@@ -45,10 +46,11 @@ class CategoryItem extends StatelessWidget {
             category.title,
             style: Theme.of(
               context,
-            ).textTheme.labelLarge?.copyWith(color: const Color(0xFF45483C)),
+            ).textTheme.labelLarge?.copyWith(color: AppTheme.onSurfaceVariant),
           ),
         ],
       ),
     );
   }
 }
+

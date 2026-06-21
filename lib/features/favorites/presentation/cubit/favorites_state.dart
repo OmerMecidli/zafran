@@ -5,3 +5,4 @@ class FavoritesState {
 
   FavoritesState({required this.favoriteMeals});
 }
+

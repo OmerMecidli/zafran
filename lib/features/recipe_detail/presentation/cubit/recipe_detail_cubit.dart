@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/repositories/recipe_detail_repository.dart';
+import '../../domain/repositories/recipe_detail_repository.dart';
 import 'recipe_detail_state.dart';
 
 class RecipeDetailCubit extends Cubit<RecipeDetailState> {
@@ -17,3 +17,5 @@ class RecipeDetailCubit extends Cubit<RecipeDetailState> {
     }
   }
 }
+
+

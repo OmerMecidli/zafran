@@ -12,3 +12,4 @@ class SearchError extends SearchState {
   final String message;
   SearchError({required this.message});
 }
+

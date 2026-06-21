@@ -1,3 +1,4 @@
+import 'package:zafran/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,18 +18,18 @@ class MainScreen extends StatelessWidget {
         onDestinationSelected: (int index) => _onItemTapped(index, context),
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: Color(0xFF45483C)),
-            selectedIcon: Icon(Icons.home, color: Color(0xFF3E5219)),
+            icon: Icon(Icons.home_outlined, color: AppTheme.onSurfaceVariant),
+            selectedIcon: Icon(Icons.home, color: AppTheme.primaryColor),
             label: 'Ana Səhifə',
           ),
           NavigationDestination(
-            icon: Icon(Icons.favorite_border, color: Color(0xFF45483C)),
-            selectedIcon: Icon(Icons.favorite, color: Color(0xFF9F402D)),
+            icon: Icon(Icons.favorite_border, color: AppTheme.onSurfaceVariant),
+            selectedIcon: Icon(Icons.favorite, color: AppTheme.secondaryColor),
             label: 'Favoritlər',
           ),
           NavigationDestination(
-            icon: Icon(Icons.search, color: Color(0xFF45483C)),
-            selectedIcon: Icon(Icons.search, color: Color(0xFF3E5219)),
+            icon: Icon(Icons.search, color: AppTheme.onSurfaceVariant),
+            selectedIcon: Icon(Icons.search, color: AppTheme.primaryColor),
             label: 'Axtarış',
           ),
         ],

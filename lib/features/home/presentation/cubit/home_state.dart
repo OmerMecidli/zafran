@@ -1,4 +1,4 @@
-import 'package:zafran2/features/home/data/models/meal_model.dart';
+import 'package:zafran/features/home/data/models/meal_model.dart';
 
 import '../../data/models/category_model.dart';
 
@@ -10,9 +10,10 @@ class HomeLoading extends HomeState {}
 
 class HomeLoaded extends HomeState {
   final List<CategoryModel> categories;
+  final List<String> areas;
   final MealModel dailyMeal;
 
-  HomeLoaded({required this.categories, required this.dailyMeal});
+  HomeLoaded({required this.categories, required this.areas, required this.dailyMeal});
 }
 
 class HomeError extends HomeState {
@@ -20,3 +21,4 @@ class HomeError extends HomeState {
 
   HomeError({required this.message});
 }
+

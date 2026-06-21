@@ -12,3 +12,4 @@ class CategoryMealsError extends CategoryMealsState {
   final String message;
   CategoryMealsError({required this.message});
 }
+

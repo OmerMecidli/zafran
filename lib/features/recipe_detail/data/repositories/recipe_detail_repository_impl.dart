@@ -2,11 +2,15 @@ import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../home/data/models/meal_model.dart';
 
-class RecipeDetailRepository {
+import '../../domain/repositories/recipe_detail_repository.dart';
+import '../../../../core/error/exceptions.dart';
+
+class RecipeDetailRepositoryImpl implements RecipeDetailRepository {
   final ApiClient apiClient;
 
-  RecipeDetailRepository({required this.apiClient});
+  RecipeDetailRepositoryImpl({required this.apiClient});
 
+  @override
   Future<MealModel> getMealDetails(String id) async {
     try {
       final response = await apiClient.dio.get('${ApiConstants.lookupById}$id');
@@ -14,10 +18,12 @@ class RecipeDetailRepository {
       if (response.statusCode == 200 && response.data['meals'] != null) {
         return MealModel.fromJson(response.data);
       } else {
-        throw Exception('Resepti tapmaq mümkün olmadı');
+        throw ServerException('Resepti tapmaq mümkün olmadı');
       }
     } catch (e) {
-      throw Exception('Xəta baş verdi: $e');
+      throw ServerException('Xəta baş verdi: $e');
     }
   }
 }
+
+

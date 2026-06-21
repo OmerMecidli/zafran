@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/repositories/search_repository.dart';
+import '../../domain/repositories/search_repository.dart';
 import 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
@@ -7,7 +7,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   SearchCubit({required this.repository}) : super(SearchInitial());
 
-  Future<void> searchMeals(String query) async {
+  Future<void> searchMeals(String query, {bool isIngredientSearch = false}) async {
     if (query.trim().isEmpty) {
       emit(SearchInitial());
       return;
@@ -15,7 +15,9 @@ class SearchCubit extends Cubit<SearchState> {
 
     emit(SearchLoading());
     try {
-      final meals = await repository.searchMeals(query);
+      final meals = isIngredientSearch
+          ? await repository.searchMealsByIngredient(query)
+          : await repository.searchMeals(query);
       emit(SearchLoaded(meals: meals));
     } catch (e) {
       emit(SearchError(message: e.toString()));
@@ -26,3 +28,5 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchInitial());
   }
 }
+
+
