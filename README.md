@@ -23,10 +23,6 @@
 - **Animations:** [Flutter Animate](https://pub.dev/packages/flutter_animate)
 - **API Integration:** Powered by [TheMealDB API](https://www.themealdb.com/).
 
-## 📱 Screenshots
-
-*(Add screenshots of your application here)*
-
 ## 📥 Installation
 
 1. **Clone the repository:**
